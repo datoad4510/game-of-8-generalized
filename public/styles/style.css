@@ -30,3 +30,23 @@
 body {
     padding-top: 20vh;
 }
+
+#options-container {
+    width: fit-content;
+    margin: 0 auto;
+
+    border: 1px solid black;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: rgb(180, 211, 211);
+}
+
+#options-container button {
+    display: block;
+    margin: 0 auto;
+    padding: 2px;
+}
+
+.display-none {
+    display: none;
+}

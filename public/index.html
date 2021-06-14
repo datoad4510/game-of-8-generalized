@@ -11,17 +11,60 @@
 </head>
 
 <body>
-    <div id="problem-data-container">
-        <div id="initial-grid-container">
-            <span>Initial grid:</span>
+    <div id="options-container">
+
+        <label for="rows">Rows:</label>
+        <select name="rows" id="rows">
+            <option value="2">2</option>
+            <option value="3" selected>3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+        </select>
+        <br> <br>
+        <label for="cols">Columns:</label>
+        <select name="cols" id="cols">
+            <option value="2">2</option>
+            <option value="3" selected>3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+        </select>
+
+        <br> <br>
+        <label for="isRandom">Completely randomize(no guarantee of solution):</label>
+        <input type="checkbox" name="isRandom" id="isRandom">
+        <br> <br>
+        <div id="difficulty-container">
+            <label for="difficulty">Difficulty (number of moves in the solution will be less than this):</label>
+            <input type="number" name="difficulty" id="difficulty" value="30" min="0" max="1000">
         </div>
-        <div id="target-grid-container">
-            <span>Target grid:</span>
+        <br> <br>
+        <button id="start-button">Start</button>
+    </div>
+
+
+
+    <div id="game-container" class="display-none">
+        <div id="problem-data-container">
+            <div id="initial-grid-container">
+                <span>Initial grid:</span>
+            </div>
+            <div id="target-grid-container">
+                <span>Target grid:</span>
+            </div>
+        </div>
+
+        <div id="grid-container">
+            <p>You can use WASD or arrow keyes to move in the grid</p>
         </div>
     </div>
 
-    <div id="grid-container">
+    <div id="end-container" class="display-none">
+        <span>You won!</span>
+        <button id="again">Again</button>
     </div>
+
 </body>
 
 </html>

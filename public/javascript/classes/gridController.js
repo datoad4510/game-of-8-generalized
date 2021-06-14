@@ -95,7 +95,6 @@ export class gridController {
             ]);
 
             agentWorker.onmessage = function (event) {
-                console.log("Message received from worker");
                 resolve(event.data);
             };
         });

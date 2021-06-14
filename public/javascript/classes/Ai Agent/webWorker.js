@@ -3,8 +3,10 @@ import { Board } from "../board.js";
 import { Agent } from "./agent.js";
 
 onmessage = function (e) {
-    console.log("Message received from main script");
+    // unpack data
     const receivedMessage = [...e.data];
+
+    // initialize data
     const rows = receivedMessage[0];
     const cols = receivedMessage[1];
     const board = receivedMessage[2];
@@ -13,13 +15,18 @@ onmessage = function (e) {
     const targetBoardObj = new Board(rows, cols, targetBoard);
     const algorithm = receivedMessage[4];
     const maxIterationCount = receivedMessage[5];
+
+    // create agent from data
     const agent = new Agent(
         boardObj,
         targetBoardObj,
         algorithm,
         maxIterationCount
     );
+
+    // run heavy computation
     const workerResult = agent.run();
-    console.log("Posting message back to main script");
+
+    // send back data
     postMessage(workerResult);
 };

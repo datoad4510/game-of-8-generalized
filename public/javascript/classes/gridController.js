@@ -73,6 +73,7 @@ export class gridController {
             { type: "module" }
         );
 
+        // get this data because this context changes
         const rows = this.board.rows;
         const cols = this.board.cols;
         const board = this.board.board;
@@ -80,6 +81,8 @@ export class gridController {
         const algorithm = this.algorithm.name;
         const maxIterationCount = this.algorithm.maxIterationCount;
 
+        // promisify passing data and getting answer from worker
+        // if we didn't do this, the function would finish before the calculations were returned
         const answerPromise = new Promise(function (resolve) {
             agentWorker.postMessage([
                 rows,

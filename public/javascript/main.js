@@ -10,7 +10,7 @@ import { node } from "./classes/decisionTree/treeNode.js";
 window.onload = async () => {
     // make a 3x3 board
     const board = new Board(4, 4);
-    board.shuffleBoardSol(5);
+    board.shuffleBoardSol(50);
     const targetBoard = new Board(4, 4);
 
     // make a grid from the board and add it to the DOM
@@ -31,7 +31,7 @@ window.onload = async () => {
     // spawn a grid controller to control the spawned board
     const gridController = new controller(grid, board, targetBoard, onWin, {
         name: "bfs",
-        maxIterationCount: 300000,
+        maxIterationCount: 3000000,
     });
 
     // add movement buttons and hook up gridController to them

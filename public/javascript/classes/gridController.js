@@ -74,6 +74,7 @@ export class gridController {
         );
 
         // get this data because this context changes
+        // ! also, objects can't be passed to web workers!
         const rows = this.board.rows;
         const cols = this.board.cols;
         const board = this.board.board;

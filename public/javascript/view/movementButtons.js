@@ -1,6 +1,8 @@
+import { gridController } from "../classes/gridController.js";
+
 /**
  *
- * @param {controller} gridController
+ * @param {gridController} gridController
  */
 export function addMovementButtons(gridController) {
     const moveUpBtn = document.createElement("button");
@@ -27,7 +29,19 @@ export function addMovementButtons(gridController) {
         gridController.moveGrid("left");
     });
 
+    const resetBtn = document.createElement("button");
+    resetBtn.innerText = "Reset";
+    resetBtn.addEventListener("click", () => {
+        gridController.resetGrid();
+    });
+
     const gridContainer = document.getElementById("grid-container");
 
-    gridContainer.append(moveUpBtn, moveRightBtn, moveDownBtn, moveLeftBtn);
+    gridContainer.append(
+        moveUpBtn,
+        moveRightBtn,
+        moveDownBtn,
+        moveLeftBtn,
+        resetBtn
+    );
 }

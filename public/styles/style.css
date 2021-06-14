@@ -5,7 +5,7 @@
     --cell-size: 50px;
 }
 
-#grid > div {
+.grid > div {
     height: var(--cell-size);
     width: var(--cell-size);
     border: 1px solid black;
@@ -16,9 +16,15 @@
     justify-content: center;
 }
 
+#problem-data-container {
+    display: flex;
+    justify-content: space-around;
+}
+
 #grid-container {
     width: fit-content;
     margin: 0 auto;
+    padding-top: 10vh;
 }
 
 body {

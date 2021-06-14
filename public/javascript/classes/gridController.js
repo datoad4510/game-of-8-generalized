@@ -1,5 +1,6 @@
 import { Board } from "./board.js";
-
+import { Agent } from "../classes/Ai Agent/agent.js";
+import { arrayEqual } from "../helpers/arrayEqual.js";
 export class gridController {
     /**
      * @callback onWin
@@ -13,16 +14,66 @@ export class gridController {
      * @param {Board} board initial board configuration
      * @param {Board} targetBoard target board configuration
      * @type {onWin} callback function for what happens when you win
+     * @param {{name: string, maxIterationCount: number}} algorithm
+     * @param {Array.<string>} optimalPath moves that get us from initial board to final board (leave empty if unknown)
      */
-    constructor(board, targetBoard, onWin) {
-        this.grid = document.getElementById("grid");
+    constructor(
+        grid,
+        board,
+        targetBoard,
+        onWin = () => {},
+        algorithm = {
+            name: "bfs",
+            maxIterationCount: Infinity,
+        },
+        optimalPath = []
+    ) {
+        this.grid = grid;
         this.board = board;
+        this.initialBoard = new Board(-1, -1, this.board);
         this.targetBoard = targetBoard;
         this.onWin = onWin;
+        this.optimalPath = optimalPath;
+        this.agent = new Agent(
+            board,
+            targetBoard,
+            algorithm.name,
+            algorithm.maxIterationCount
+        );
+
+        this.checkOver();
     }
 
     getGridCell(row, col) {
-        return document.getElementById(`cell_${row}${col}`);
+        return this.grid.getElementsByClassName(`cell_${row}${col}`)[0];
+    }
+
+    setGridCell(row, col, val) {
+        this.grid.getElementsByClassName(`cell_${row}${col}`)[0].innerText =
+            val;
+    }
+
+    resetGrid() {
+        // reset inner state
+        this.board = new Board(-1, -1, this.initialBoard);
+
+        // reset ui
+        for (let row = 0; row < this.board.rows; row++) {
+            for (let col = 0; col < this.board.cols; col++) {
+                const initialValue = this.initialBoard.getValue(row, col);
+
+                if (initialValue === 0) {
+                    this.setGridCell(row, col, "");
+                    continue;
+                }
+
+                this.setGridCell(row, col, initialValue);
+            }
+        }
+    }
+
+    getAnswer() {
+        this.optimalPath = this.agent.run();
     }
 
     /**
@@ -40,7 +91,7 @@ export class gridController {
 
     // check if game is over
     checkOver() {
-        if (this.board === this.targetBoard) {
+        if (arrayEqual(this.board.board, this.targetBoard.board)) {
             this.onWin();
             return true;
         } else return false;
@@ -99,5 +150,7 @@ export class gridController {
         this.swapCellText(emptyCell, movingCell);
 
         moveBoard();
+
+        this.checkOver();
     }
 }

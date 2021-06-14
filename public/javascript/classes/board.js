@@ -1,4 +1,6 @@
+import { arrayEqual } from "../helpers/arrayEqual.js";
 import { shuffleArray } from "../helpers/arrayShuffler.js";
+import { arrayShufflerHasSolution } from "../helpers/arrayShufflerHasSolution.js";
 import { range } from "../helpers/rangeGenerator.js";
 
 export class Board {
@@ -19,7 +21,7 @@ export class Board {
             // copying another board into this board
             this.rows = other_board.rows;
             this.cols = other_board.cols;
-            this.board = other_board.board;
+            this.board = [...other_board.board];
             this.zeroPosition = other_board.zeroPosition;
         }
     }
@@ -49,14 +51,62 @@ export class Board {
         }
     }
 
+    // what move gets us from this board to the parameter board
+    /**
+     *
+     * @param {Board} nextBoard the board that we want to get with one move from current board
+     * @returns
+     */
+    whatMove(nextBoard) {
+        // directions and their reverses
+        const moves = [
+            ["left", "right"],
+            ["right", "left"],
+            ["up", "down"],
+            ["down", "up"],
+        ];
+
+        for (const move of moves) {
+            const direction = move[0];
+            const reverse = move[1];
+
+            // if such a move is valid, consider it
+            if (this.moveBoard(direction)) {
+                if (arrayEqual(this.board, nextBoard)) {
+                    // move board into the original position
+                    this.moveBoard(reverse);
+
+                    return direction;
+                }
+                this.moveBoard(reverse);
+            }
+        }
+
+        return "ERR";
+    }
+
     shuffleBoard() {
         shuffleArray(this.board);
         this.findZero();
     }
 
+    shuffleBoardSol(iterationNum) {
+        arrayShufflerHasSolution(
+            this.board,
+            this.rows,
+            this.cols,
+            iterationNum
+        );
+        this.findZero();
+    }
+
     // moving 0 in the board, if at edge dont do anything
+    /**
+     *
+     * @param {string} direction "up","right","down","left"
+     * @returns boolean false if out of bounds, else true
+     */
     moveBoard(direction) {
-        console.log(direction);
         const directions = {
             up: [-1, 0],
 
@@ -75,8 +125,10 @@ export class Board {
             this.zeroPosition.row + offset[0] >= this.rows ||
             this.zeroPosition.col + offset[1] < 0 ||
             this.zeroPosition.col + offset[1] >= this.cols
-        )
+        ) {
+            // out of bounds
             return false;
+        }
 
         // make a move
         this.swapValues(
@@ -87,8 +139,7 @@ export class Board {
         );
 
         // update zeroPosition
-        this.zeroPosition.row += offset[0];
-        this.zeroPosition.col += offset[1];
+        this.findZero();
 
         return true;
     }

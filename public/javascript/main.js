@@ -7,10 +7,10 @@ import { node } from "./classes/decisionTree/treeNode.js";
 // TODO: maybe make grid into a class. gridController won't need to implement getCell and setCell
 // TODO: pass ai to service worker
 
-window.onload = () => {
+window.onload = async () => {
     // make a 3x3 board
     const board = new Board(4, 4);
-    board.shuffleBoardSol(30);
+    board.shuffleBoardSol(5);
     const targetBoard = new Board(4, 4);
 
     // make a grid from the board and add it to the DOM
@@ -34,11 +34,11 @@ window.onload = () => {
         maxIterationCount: 300000,
     });
 
-    gridController.getAnswer();
-    console.log(gridController.optimalPath);
-
     // add movement buttons and hook up gridController to them
     addMovementButtons(gridController);
+
+    await gridController.getAnswer();
+    console.log(gridController.optimalPath);
 };
 
 function onWin() {

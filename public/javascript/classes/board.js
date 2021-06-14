@@ -17,8 +17,14 @@ export class Board {
             this.cols = cols;
             this.board = range(0, rows * cols - 1);
             this.zeroPosition = { row: 0, col: 0 };
+        } else if (Array.isArray(other_board)) {
+            // construction using array
+            this.rows = rows;
+            this.cols = cols;
+            this.board = other_board;
+            this.findZero();
         } else {
-            // copying another board into this board
+            // copying another board object into this board
             this.rows = other_board.rows;
             this.cols = other_board.cols;
             this.board = [...other_board.board];

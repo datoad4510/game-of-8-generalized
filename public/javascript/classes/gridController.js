@@ -34,13 +34,7 @@ export class gridController {
         this.targetBoard = targetBoard;
         this.onWin = onWin;
         this.optimalPath = optimalPath;
-        this.agent = new Agent(
-            board,
-            targetBoard,
-            algorithm.name,
-            algorithm.maxIterationCount
-        );
-
+        this.algorithm = algorithm;
         this.checkOver();
     }
 
@@ -72,8 +66,37 @@ export class gridController {
         }
     }
 
-    getAnswer() {
-        this.optimalPath = this.agent.run();
+    async getAnswer() {
+        // this.optimalPath = this.agent.run();
+        const agentWorker = new Worker(
+            "./javascript/classes/Ai Agent/webWorker.js",
+            { type: "module" }
+        );
+
+        const rows = this.board.rows;
+        const cols = this.board.cols;
+        const board = this.board.board;
+        const targetBoard = this.targetBoard.board;
+        const algorithm = this.algorithm.name;
+        const maxIterationCount = this.algorithm.maxIterationCount;
+
+        const answerPromise = new Promise(function (resolve) {
+            agentWorker.postMessage([
+                rows,
+                cols,
+                board,
+                targetBoard,
+                algorithm,
+                maxIterationCount,
+            ]);
+
+            agentWorker.onmessage = function (event) {
+                console.log("Message received from worker");
+                resolve(event.data);
+            };
+        });
+
+        this.optimalPath = await answerPromise;
     }
 
     /**

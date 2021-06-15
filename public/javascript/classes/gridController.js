@@ -118,6 +118,7 @@ export class gridController {
     // check if game is over
     checkOver() {
         if (arrayEqual(this.board.board, this.targetBoard.board)) {
+            // this.onWin(this);
             this.onWin();
             return true;
         } else return false;

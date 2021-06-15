@@ -18,7 +18,6 @@ export class Agent {
         this.maxIterationCount = maxIterationCount;
         this.currentIterationCount = 0;
         this.algorithm = algorithm;
-
         // create decision tree
     }
 

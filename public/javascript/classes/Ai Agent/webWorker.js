@@ -15,7 +15,6 @@ onmessage = function (e) {
     const targetBoardObj = new Board(rows, cols, targetBoard);
     const algorithm = receivedMessage[4];
     const maxIterationCount = receivedMessage[5];
-
     // create agent from data
     const agent = new Agent(
         boardObj,
@@ -23,7 +22,6 @@ onmessage = function (e) {
         algorithm,
         maxIterationCount
     );
-
     // run heavy computation
     const workerResult = agent.run();
 

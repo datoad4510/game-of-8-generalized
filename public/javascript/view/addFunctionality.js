@@ -3,6 +3,8 @@ import { generateGrid } from "./generateGrid.js";
 import { gridController as controller } from "../classes/gridController.js";
 import { addMovement } from "./movement.js";
 
+let eventListeners = [];
+
 function checkboxEventListener() {
     const difficultyCheckbox = document.getElementById("isRandom");
 
@@ -30,8 +32,16 @@ function onWin() {
         grid.remove();
     });
     const buttons = document.querySelectorAll(".movement-button");
+
+    eventListeners.forEach((listener) => {
+        document.removeEventListener("keydown", listener);
+    });
     buttons.forEach((button) => {
         button.remove();
+    });
+    const listItems = document.querySelectorAll("#solution-list li");
+    listItems.forEach((item) => {
+        item.remove();
     });
     document.getElementById("game-container").classList.toggle("display-none");
     document.getElementById("end-container").classList.toggle("display-none");
@@ -69,16 +79,12 @@ async function createGrid(rows, cols, isRandom, difficulty) {
     });
 
     // add movement buttons and hook up gridController to them
-    addMovement(gridController);
+    eventListeners = addMovement(gridController);
 
     await gridController.getAnswer();
-    console.log(gridController.optimalPath);
 }
 
-export function startEventListener() {
-    checkboxEventListener();
-    againEventListener();
-
+function startEventListener() {
     const startButton = document.getElementById("start-button");
 
     startButton.addEventListener("click", () => {
@@ -87,8 +93,6 @@ export function startEventListener() {
         const cols = document.getElementById("cols").value;
         const isRandom = document.getElementById("isRandom").checked;
         const difficulty = document.getElementById("difficulty").value;
-
-        console.log(rows, cols, isRandom, difficulty);
 
         // hide options menu
         const optionsContainer = document.getElementById("options-container");
@@ -99,4 +103,10 @@ export function startEventListener() {
         const gameContainer = document.getElementById("game-container");
         gameContainer.classList.toggle("display-none");
     });
+}
+
+export function addEventListeners() {
+    checkboxEventListener();
+    againEventListener();
+    startEventListener();
 }

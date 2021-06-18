@@ -3,6 +3,7 @@ import { generateGrid } from "./generateGrid.js";
 import { gridController as controller } from "../classes/gridController.js";
 import { addMovement } from "./movement.js";
 
+// this will hold event listeners that will be deleted when "again" is pressed
 let eventListeners = [];
 
 function checkboxEventListener() {

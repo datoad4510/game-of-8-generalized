@@ -41,6 +41,7 @@ export function addMovement(gridController) {
     const moveUpBtn = document.createElement("button");
     moveUpBtn.innerText = "Up";
     moveUpBtn.className = "movement-button";
+    moveUpBtn.id = "upBtn";
     moveUpBtn.addEventListener("click", () => {
         gridController.moveGrid("up");
     });
@@ -49,7 +50,7 @@ export function addMovement(gridController) {
     const moveRightBtn = document.createElement("button");
     moveRightBtn.innerText = "Right";
     moveRightBtn.className = "movement-button";
-
+    moveRightBtn.id = "rightBtn";
     moveRightBtn.addEventListener("click", () => {
         gridController.moveGrid("right");
     });
@@ -58,7 +59,7 @@ export function addMovement(gridController) {
     const moveDownBtn = document.createElement("button");
     moveDownBtn.innerText = "Down";
     moveDownBtn.className = "movement-button";
-
+    moveDownBtn.id = "downBtn";
     moveDownBtn.addEventListener("click", () => {
         gridController.moveGrid("down");
     });
@@ -67,6 +68,7 @@ export function addMovement(gridController) {
     const moveLeftBtn = document.createElement("button");
     moveLeftBtn.innerText = "Left";
     moveLeftBtn.className = "movement-button";
+    moveLeftBtn.id = "leftBtn";
     moveLeftBtn.addEventListener("click", () => {
         gridController.moveGrid("left");
     });
@@ -76,16 +78,18 @@ export function addMovement(gridController) {
     const resetBtn = document.createElement("button");
     resetBtn.innerText = "Reset";
     resetBtn.className = "movement-button";
+    resetBtn.id = "resetBtn";
     resetBtn.addEventListener("click", resetHandler);
 
     const solutionBtn = document.createElement("button");
     solutionBtn.innerText = "Get Solution";
     solutionBtn.className = "movement-button";
+    solutionBtn.id = "solutionBtn";
     solutionBtn.addEventListener("click", solutionHandler);
 
-    const gridContainer = document.getElementById("grid-container");
+    const buttonsContainer = document.getElementById("buttons-container");
 
-    gridContainer.append(
+    buttonsContainer.append(
         moveUpBtn,
         moveRightBtn,
         moveDownBtn,

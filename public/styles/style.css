@@ -5,6 +5,15 @@
     --cell-size: 50px;
 }
 
+body {
+    background-color: rgb(217, 232, 245);
+}
+
+.grid {
+    margin-bottom: 30px;
+    background-color: white;
+}
+
 .grid > div {
     height: var(--cell-size);
     width: var(--cell-size);
@@ -19,12 +28,35 @@
 #problem-data-container {
     display: flex;
     justify-content: space-around;
+    align-items: center;
 }
 
 #grid-container {
     width: fit-content;
+    gap: 20px;
     margin: 0 auto;
-    padding-top: 10vh;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 5vh;
+
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+
+    background-color: bisque;
+    border-radius: 10px;
+    border: 1px solid burlywood;
+}
+
+@media (max-width: 450px) {
+    #problem-data-container {
+        flex-direction: column;
+    }
+
+    #grid-container {
+        flex-direction: column-reverse;
+    }
 }
 
 body {
@@ -49,4 +81,64 @@ body {
 
 .display-none {
     display: none;
+}
+
+#buttons-container {
+    position: relative;
+    background-color: rgb(180, 211, 211);
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid burlywood;
+}
+
+#buttons-container > p {
+    margin-bottom: 20px;
+}
+
+#solution-container {
+    background-color: bisque;
+    width: max-content;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid burlywood;
+}
+#solution-list {
+    background-color: rgb(180, 211, 211);
+    padding-left: 25px;
+}
+
+#upBtn {
+    position: absolute;
+    bottom: 40px;
+    left: 40px;
+}
+
+#rightBtn {
+    position: absolute;
+    bottom: 10px;
+    left: 90px;
+}
+
+#downBtn {
+    position: absolute;
+    bottom: 10px;
+    left: 40px;
+}
+
+#leftBtn {
+    position: absolute;
+    bottom: 10px;
+    left: 5px;
+}
+
+#resetBtn {
+    position: absolute;
+    bottom: 10px;
+    right: 5px;
+}
+
+#solutionBtn {
+    position: absolute;
+    bottom: 40px;
+    right: 5px;
 }
